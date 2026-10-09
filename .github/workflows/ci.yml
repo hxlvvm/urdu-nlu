@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+
+  docker:
+    # Builds the real image with the released int8 model and checks two live predictions.
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch model release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download model-v1 -D artifacts --clobber -p model.int8.onnx -p tokenizer.json -p labels.json
+      - run: docker build -t urdu-nlu .
+      - run: docker run -d -p 8000:8000 --name nlu urdu-nlu
+      - name: Wait for the API
+        run: for i in $(seq 60); do curl -sf localhost:8000/health && exit 0; sleep 2; done; docker logs nlu; exit 1
+      - name: English request
+        run: |
+          curl -sf -X POST localhost:8000/predict -H 'content-type: application/json' \
+            -d '{"text": "wake me up at seven am tomorrow"}' | tee en.json
+          python -c "import json; d = json.load(open('en.json')); assert d['intent'] == 'alarm_set', d"
+      - name: Urdu request
+        run: |
+          curl -sf -X POST localhost:8000/predict -H 'content-type: application/json' \
+            -d '{"text": "مجھے کل صبح سات بجے جگا دیں"}' | tee ur.json
+          python -c "import json; d = json.load(open('ur.json')); assert d['intent'] == 'alarm_set', d"

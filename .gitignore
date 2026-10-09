@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+data/raw/
+mlruns/
+artifacts/*.onnx
+.pytest_cache/
+.hf_cache/
+jobs/local/
+# keep the result files that the README tables are built from
+runs/*
+!runs/baseline_tfidf.json
+!runs/baseline_llm.json
+!runs/en_ur/
+!runs/en_only/
+!runs/ur_only/
+runs/*/*
+!runs/*/metrics.json
+artifacts/tokenizer.json

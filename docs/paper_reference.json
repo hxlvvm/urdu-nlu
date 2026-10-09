@@ -1,0 +1,7 @@
+{
+ "source": "FitzGerald et al., MASSIVE (arXiv:2204.08582), Tables 7-9, XLM-R Base, test set, percent",
+ "note": "'Full' trains on all 51 locales at once; 'Zero' trains on en-US only and tests other locales.",
+ "en-US": {"full": {"intent_acc": 88.3, "slot_f1": 78.7, "exact_match": 69.7}},
+ "ur-PK": {"full": {"intent_acc": 83.2, "slot_f1": 68.0, "exact_match": 59.0},
+           "zero": {"intent_acc": 65.6, "slot_f1": 41.4, "exact_match": 30.5}}
+}

@@ -1,0 +1,73 @@
+{
+ "size_mb": {
+  "model.fp32.onnx": 1059.1,
+  "model.int8.onnx": 265.5
+ },
+ "test": {
+  "en-US": {
+   "pytorch_fp32": {
+    "n": 2974,
+    "intent_acc": 0.8920645595158037,
+    "slot_f1": 0.8063789218235397,
+    "exact_match": 0.7128446536650975
+   },
+   "model.fp32.onnx": {
+    "n": 2974,
+    "intent_acc": 0.8920645595158037,
+    "slot_f1": 0.8063789218235397,
+    "exact_match": 0.7128446536650975,
+    "intent_agreement_with_pytorch": 1.0,
+    "tag_agreement_with_pytorch": 1.0
+   },
+   "model.int8.onnx": {
+    "n": 2974,
+    "intent_acc": 0.890719569603228,
+    "slot_f1": 0.7913517314114958,
+    "exact_match": 0.7014122394082044,
+    "intent_agreement_with_pytorch": 0.968728984532616,
+    "tag_agreement_with_pytorch": 0.8917283120376597,
+    "intent_acc_on_llm_subset": 0.8766666666666667
+   }
+  },
+  "ur-PK": {
+   "pytorch_fp32": {
+    "n": 2974,
+    "intent_acc": 0.8618022864828514,
+    "slot_f1": 0.7116222338386479,
+    "exact_match": 0.6294552790854069
+   },
+   "model.fp32.onnx": {
+    "n": 2974,
+    "intent_acc": 0.8618022864828514,
+    "slot_f1": 0.7116222338386479,
+    "exact_match": 0.6294552790854069,
+    "intent_agreement_with_pytorch": 1.0,
+    "tag_agreement_with_pytorch": 1.0
+   },
+   "model.int8.onnx": {
+    "n": 2974,
+    "intent_acc": 0.8567585743106927,
+    "slot_f1": 0.6927871772039181,
+    "exact_match": 0.6156691324815063,
+    "intent_agreement_with_pytorch": 0.9482178883658372,
+    "tag_agreement_with_pytorch": 0.8416274377942166,
+    "intent_acc_on_llm_subset": 0.8633333333333333
+   }
+  }
+ },
+ "latency_single_request": {
+  "threads": 4,
+  "pytorch_fp32": {
+   "p50_ms": 38.28,
+   "p95_ms": 38.75
+  },
+  "model.fp32.onnx": {
+   "p50_ms": 17.17,
+   "p95_ms": 17.52
+  },
+  "model.int8.onnx": {
+   "p50_ms": 6.66,
+   "p95_ms": 6.79
+  }
+ }
+}

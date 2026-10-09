@@ -1,0 +1,6 @@
+# Serving plus tests and the classical baseline (CPU only).
+-r requirements-serve.txt
+seqeval==1.2.2
+scikit-learn==1.6.1
+pytest==8.3.5
+httpx==0.28.1
