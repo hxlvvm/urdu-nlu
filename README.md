@@ -85,7 +85,11 @@ epoch 60), which rules out label-alignment and decoding bugs.
 
 ```bash
 # API with the released int8 model (no GPU, no PyTorch)
-gh release download model-v1 -R hxlvvm/urdu-nlu -D artifacts --clobber -p model.int8.onnx -p tokenizer.json -p labels.json
+mkdir -p artifacts
+for f in model.int8.onnx tokenizer.json labels.json; do
+  curl -L -o artifacts/$f https://github.com/hxlvvm/urdu-nlu/releases/download/model-v1/$f
+done
+# or: gh release download model-v1 -R hxlvvm/urdu-nlu -D artifacts --clobber -p model.int8.onnx -p tokenizer.json -p labels.json
 docker build -t urdu-nlu . && docker run -p 8000:8000 urdu-nlu
 curl -X POST localhost:8000/predict -H 'content-type: application/json' -d '{"text": "مجھے کل صبح سات بجے جگا دیں"}'
 ```
